@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" class="light" dir="ltr">
+    <head>
+            <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({
+                    showProcessingMessages: false,
+                    messageStyle: "none",
+                    extensions: ['tex2jax.js'],
+                    jax: ['input/TeX', 'output/HTML-CSS'],
+                    tex2jax: {
+                        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                        processEscapes: true
+                    },
+                    "HTML-CSS": { availableFonts: ["STIX", "TeX"] }
+                });
+            </script>
+            
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>编译构建 - 仓颉编程语言工具使用指南</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../assets/style.css">
+        <link rel="stylesheet" href="../../assets/theme.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/ide_plug-in_overview.html"><strong aria-hidden="true">1.</strong> IDE 插件使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/IDE/install.html"><strong aria-hidden="true">1.1.</strong> 安装指导</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/language_service.html"><strong aria-hidden="true">1.2.</strong> 语言服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/create_cj_project.html"><strong aria-hidden="true">1.3.</strong> 创建仓颉工程</a></li><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/compilation_and_building.html" class="active"><strong aria-hidden="true">1.4.</strong> 编译构建</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/debug_service.html"><strong aria-hidden="true">1.5.</strong> 调试服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/command-line_tools_integration.html"><strong aria-hidden="true">1.6.</strong> 命令行工具集成</a></li></ol></li><li class="chapter-item "><a href="../../source_zh_cn/tools/user_manual_cjnative.html"><strong aria-hidden="true">2.</strong> 命令行工具使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/tools/cjpm_manual_cjnative.html"><strong aria-hidden="true">2.1.</strong> 包管理工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjdb_manual_cjnative.html"><strong aria-hidden="true">2.2.</strong> 调试工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjlint_manual.html"><strong aria-hidden="true">2.3.</strong> 静态检查工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjfmt_manual.html"><strong aria-hidden="true">2.4.</strong> 格式化工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjcov_manual_cjnative.html"><strong aria-hidden="true">2.5.</strong> 覆盖率工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjprof_manual_cjnative.html"><strong aria-hidden="true">2.6.</strong> 性能分析工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjtrace_recover_manual_cjnative.html"><strong aria-hidden="true">2.7.</strong> 异常堆栈信息还原工具</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">仓颉编程语言工具使用指南</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="编译构建"><a class="header" href="#编译构建">编译构建</a></h1>
+<p>VSCode 中可视化方式提供的仓颉功能编译构建能力依赖 cjpm 工具，该工具要求打开的仓颉工程的模块内必须包含规范的 <code>cjpm.toml</code> 文件。若没有该文件，仍想执行工程的编译构建，可在终端使用 cjc 命令。</p>
+<p>在 VSCode 中提供在命令面板执行命令、在终端进行执行命令、单击运行按钮运行工程，以及单击锤子按钮编译工程四种方式，来实现仓颉工程的编译构建。</p>
+<h2 id="编译构建方式"><a class="header" href="#编译构建方式">编译构建方式</a></h2>
+<h3 id="在命令面板执行命令"><a class="header" href="#在命令面板执行命令">在命令面板执行命令</a></h3>
+<p>在 VSCode 中使用快捷键 F1，或同时按下 Ctrl + Shift + P（macOS 系统为 Command + Shift + P）打开命令面板，输入分类词 Cangjie 来快速找到以下编译相关命令。</p>
+<ul>
+<li>
+<p>选择 <code>Cangjie: Parallelled Build</code> 选项执行并行编译。</p>
+<p><img src="./figures/paralleledBuild.png" alt="paralleledBuild" /></p>
+<p>执行并行编译后，在工程文件夹下会生成 <code>target</code> 目录，<code>target</code> 目录下有一个 <code>release</code> 文件夹，<code>release</code> 文件夹下包含三个目录：<code>.build-logs</code> 目录、<code>bin</code> 目录，以及工程名同名的目录。<code>bin</code> 目录下存放可执行文件（可执行文件只有在 <code>cjpm.toml</code> 的 <code>output-type</code> 为 <code>executable</code> 时才会生成），工程名同名目录下存放编译的中间产物。</p>
+<p>在 output Panel 上会打印编译是否成功的信息。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Verbose</code> 选项执行编译并展示编译日志。</p>
+<p><img src="./figures/verbose.png" alt="verbose" /></p>
+<p>该编译参数除了执行编译外，还会打印编译日志。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Debug</code> 选项生成 debug 版本的目标文件。</p>
+<p>该命令的编译结果中带有 debug 信息，供调试使用。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Coverage</code> 选项生成覆盖率信息。</p>
+<p>该命令在编译结果中带有覆盖率信息。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Alias</code> 执行编译并指定输出可执行文件的名称。</p>
+<p><img src="./figures/alias.png" alt="alias" /></p>
+<p>执行该命令，按下回车键后，会弹出一个输入栏，需要开发者为工程的编译结果赋予一个新的名字。该命令只对 <code>cjpm.toml</code> 的 <code>output-type</code> 为 <code>executable</code> 时有效。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Increment</code> 选项执行增量编译。</p>
+<p>用来指定增量编译。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With CustomizedOption</code> 选项按条件透传 <code>cjpm.toml</code> 中的命令。</p>
+<p><img src="./figures/cndOption.png" alt="cndOption" /></p>
+<p>使用该选项需要先在 <code>cjpm.toml</code> 中配置 <code>customized-option</code> 字段。然后在命令面板输入 <code>Build With CustomizedOption</code>，按下回车键后可以选择需要的参数，参数可以多选，选择后按下回车键即可。</p>
+<p><img src="./figures/chooseOption.png" alt="chooseOption" /></p>
+<p>若没有在 <code>cjpm.toml</code> 中配置 <code>customized-option</code> 字段，并执行了该条命令，插件会提示开发者先配置改字段。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With TargetDir</code> 选项执行编译并在指定路径生成编译产物。</p>
+<p>选择该命令执行后，可指定编译产物的输出路径，默认不作输入操作则以 <code>cjpm.toml</code> 中的 <code>target-dir</code> 字段为路径。</p>
+<p><img src="./figures/setOutputDir.png" alt="setOutputDir" /></p>
+<p>当输入的编译产物路径与 cjpm.toml 中的 <code>target-dir</code> 字段不同时，会弹出提示是否覆盖 cjpm.toml 中的 <code>target-dir</code> 字段。若选择 Yes 覆盖，则会将 cjpm.toml 中 <code>target-dir</code> 字段覆盖成输入的值。</p>
+<p><img src="./figures/isChangeOutput.png" alt="isChangeOutput" /></p>
+<p>该命令执行成功后，会在指定的路径下生成编译产物。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With Jobs</code> 选项，执行编译前自定义最大并发度。</p>
+<p>支持通过执行该命令在编译之前自定义最大并发度，输入参数为任意数字，设置范围为 (0, CPU 核数 * 2]。</p>
+<p>当在输入框输入非数字时，会终止操作，并提示开发者输入数字内容：“Invaild input! The input should be number.”</p>
+<p>当在输入框输入的范围超出所支持的范围 (0, CPU 核数 * 2] 时，会默认采用 CPU 核数，并提示超出可选范围的告警信息。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With CodeCheck</code> 选项，执行编译时进行 CodeCheck 静态代码检查。</p>
+<p>执行该命令编译工程时，会对当前工程进行 CodeCheck 静态代码检查，如果检查到【要求】级别的代码规范违规，则编译失败，检查到【建议】级别的违规仅告警，正常完成编译。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Build With MultiParameter</code> 选项执行多参数编译。</p>
+<p>仓颉工程的编译可以叠加多个参数，在命令面板搜索到 <code>Build With MultiParameter</code> 命令后，选择需要叠加的参数，其中 <code>--target</code> 参数会根据 <code>cjpm.toml</code> 中的 <code>target</code> 字段的设置来决定是否显示。如果开发者没有配置 <code>target</code> 的内容，则 <code>--target</code> 参数选项会隐藏；<code>--&lt;customized-option&gt;</code> 参数会根据 cjpm.toml 中的 <code>customized-option</code> 字段的设置来决定是否显示，如果开发者没有配置 <code>customized-option</code> 的内容，则 <code>--&lt;customized-option&gt;</code> 参数选项会隐藏。</p>
+<p><img src="./figures/multiBuild.png" alt="multi" /></p>
+<p>勾选想叠加的参数，按下回车键或者单击 ok 按钮。也可单击界面中的向左箭头，重新选择编译参数。</p>
+<p>如果叠加的参数中选择了 <code>cjpm build --output=&lt;name&gt;</code>，那么需要输入一个别名字符串，然后按下回车键执行叠加命令操作。</p>
+<p><img src="./figures/aliasString.png" alt="aliasString" /></p>
+<p>如果叠加参数中选择了 <code>cjpm build --target=&lt;name&gt;</code>，那么可以选择一个想要交叉编译的平台。</p>
+<p>如果叠加参数中选择了 <code>cjpm build --&lt;customized-option&gt;</code>，那么可以选择透传参数。</p>
+<p><img src="./figures/addOption.png" alt="addOption" /></p>
+<p>叠加命令的编译结果就是这些命令分别执行的总和。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Update Cjpm.toml</code> 选项更新 cjpm.lock 文件。</p>
+<p>在修改完 <code>cjpm.toml</code> 文件后，需要执行该命令，更新 <code>cjpm.lock</code> 文件。如果是通过 UI 界面修改的 <code>cjpm.toml</code> 文件，则不需要手动执行该操作。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Execute Test File</code> 选项编译单元测试产物，执行对应的单元测试用例，并直接打印测试结果。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Test With NoRun</code> 选项编译对应测试产物。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Test With SkipBuild</code> 选项测试产物存在的前提下，用于执行对应测试产物。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Test With Jobs</code> 选项执行单元测试之前自定义最大并发度，操作与 <code>Build With Jobs</code> 相同。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Test With MultiParameter</code> 选项执行多参数执行仓颉工程的单元测试。</p>
+<p>在选择该条命令后，可以选择指定包路径、模块或者成员执行单元测试。只有打开工作空间，才显示成员选择选项。</p>
+<p><img src="./figures/testMultiOptions.png" alt="testMultiOptions" /></p>
+<p>如果选择 <code>Specify the test paths</code> 选项，则可以输入指定待测试的包路径。若不需要指定，则直接按 Enter 键。</p>
+<p><img src="./figures/testPath.png" alt="testPath" /></p>
+<p>此步骤可通过输入多个包的路径并用空格分隔，可以实现多包并发单元测试。</p>
+<p><img src="./figures/testPathMultiPath.png" alt="testPathMultiPath" /></p>
+<p>如果选择 <code>Specify the test modules</code> 选项，则可以输入指定待测试的模块。若不需要指定，则直接按 Enter 键。</p>
+<p><img src="./figures/testModule.png" alt="testModule" /></p>
+<p>此步骤可通过输入多个模块并用空格分隔，可以实现多模块单元测试。</p>
+<p><img src="./figures/testModuleMultiModule.png" alt="testModuleMultiModule" /></p>
+<p>如果选择 <code>Specify a test member</code> 选项，则可以输入指定待测试的成员。若不需要指定，则直接按 Enter 键。</p>
+<p><img src="./figures/testMember.png" alt="testMember" /></p>
+<p>选择要叠加的参数。</p>
+<p><img src="./figures/testParams.png" alt="testParams" /></p>
+<p>如果选择了 <code>--filter=&lt;value&gt;</code> 参数，则需要输入对应的过滤测试子集的表达式。</p>
+<p><img src="./figures/testReg.png" alt="testReg" /></p>
+<p>输入过滤测试子集的表达式后，可以执行 <code>cjpm test</code> 的完整命令。执行结果会在 Output 面板输出。</p>
+<p>如果在 cjpm.toml 中配置了 <code>target</code> 和 <code>customized-option</code>，则可以选择的参数有 <code>--target=&lt;name&gt;</code> 和 <code>--&lt;customized-option&gt;</code>。</p>
+<p><img src="./figures/testParamsPlus.png" alt="testParamsPlus" /></p>
+<p>如果选择了 <code>--target=&lt;name&gt;</code> 参数，则需要选择对应的平台。</p>
+<p><img src="./figures/crossCompileTarget.png" alt="crossCompileTarget" /></p>
+<p>如果选择了 <code>--&lt;customized-option&gt;</code> 参数，则需要选择条件选项。</p>
+<p><img src="./figures/condition.png" alt="condition" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Clean Build Result</code> 选项清除编译结果（工程目录下的 build 目录）。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Check Circular Dependencies</code> 选项检测文件依赖。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Edit Configuration (UI)</code> 选项打开 UI 配置界面。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With Verbose</code> 选项展示安装日志。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With Debug</code> 选项生成 debug 版本的安装产物。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With RootPath</code> 选项指定可执行文件的安装路径。</p>
+<p>在选择该条命令后，在弹出的输入框中输入期望可执行文件的安装路径，最终会将可执行文件安装到输入的自定义路径中。不配置时，Linux 系统和 macOS 系统下默认为 <code>$HOME/.cjpm</code>，Windows 系统下默认为 <code>%USERPROFILE%/.cjpm</code>。</p>
+<p><img src="./figures/installWithRoot.png" alt="installWithRoot" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With TargetDir</code> 选项指定编译产物的存放路径。</p>
+<p>安装可执行文件前会先进行编译，选择该条命令后，在弹出的输入框中输入期望编译产物的存放路径，最终会将编译产物安装到输入的自定义路径中。</p>
+<p><img src="./figures/InstallWithTarget.png" alt="InstallWithTarget" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With Alias</code> 选项指定最终安装的产物名。</p>
+<p>选择该条命令后，在弹出的输入框中输入期望安装产物的名字。</p>
+<p><img src="./figures/installWithAlias.png" alt="installWithAlias" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With Git</code> 选项安装远端 git 代码仓产物。</p>
+<p>选择该条命令后，在弹出的输入框中输入远端 git url。</p>
+<p><img src="./figures/installWithGit.png" alt="installWithGit" /></p>
+<p>输入远端 git url 后，键入回车可进一步选择关于远端 git 代码仓的分支、tag 或 commit 信息。</p>
+<p><img src="./figures/installWithGitDetail.png" alt="installWithGitDetail" /></p>
+<p>选择自定义代码仓 branch / tag / commit 号选项，在弹出框内输入 branch / tag / commit 号信息，即可安装远端 git 代码仓产物。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With List</code> 选项打印已安装产物列表。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With SkipBuild</code> 选项跳过编译阶段以直接安装产物，需要项目处于编译完成状态。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With Jobs</code> 选项指定并行编译的最大并发数。</p>
+<p>选择该条命令后，在弹出的输入框中输入期望安装时的最大并发数。</p>
+<p><img src="./figures/installWithJobs.png" alt="installWithJobs" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With CustomizedOption</code> 选项按条件透传 <code>cjpm.toml</code> 中的命令。</p>
+<p><img src="./figures/cndOptionInstall.png" alt="cndOptionInstall" /></p>
+<p>使用该选项需要先在 <code>cjpm.toml</code> 中配置 <code>customized-option</code> 字段。然后在命令面板选择 <code>Install With CustomizedOption</code>，按下回车键后可以选择需要的参数，参数可多选，选择后按下回车键即可。</p>
+<p><img src="./figures/chooseOptionInstall.png" alt="chooseOptionInstall" /></p>
+<p>开发者需要在 <code>cjpm.toml</code> 中配置 <code>customized-option</code> 字段，才能执行该条命令。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With SkipScript</code> 选项跳过待安装模块的构建脚本的编译运行。</p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Install With CustomParameter</code> 选项执行自定义的安装命令参数选项。</p>
+<p>单击 VSCode 页面左下角齿轮图标，选择设置选项。或直接右键单击插件，选择 Extension Settings，进入配置页面。在搜索栏输入 Cangjie，选择侧边栏的 Cangjie Language Support 选项。该页面有输入框 <code>Cangjie: Cjpm Install: Custom</code>，在此输入 <code>cjpm install</code> 相关的命令选项，如 <code>-V -g --name \&lt;value\&gt;</code>。然后在命令面板选择 <code>Install With CustomParameter</code> 命令，最终将该输入框中的内容带到 <code>cjpm install</code> 中。</p>
+<p><img src="./figures/customInstallParm.png" alt="customInstallParm" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Uninstall Binary</code> 选项卸载仓颉项目，清除对应的可执行文件和依赖文件。</p>
+<p>选择该命令后，在弹出的输入框中输入需要卸载的可执行文件名字。</p>
+<p><img src="./figures/UninstallBinary.png" alt="UninstallBinary" /></p>
+</li>
+<li>
+<p>选择 <code>Cangjie: Uninstall With Root</code> 选项指定卸载时搜索的目标路径。</p>
+<p>选择该命令后，在弹出的输入框中输入期望卸载时搜索的目标路径，最终会将该路径下的指定可执行文件和依赖文件卸载。不配置时，Linux 系统和 macOS 系统下默认为 $HOME/.cjpm，在 Windows 系统下默认为 <code>%USERPROFILE%/.cjpm</code>。</p>
+<p><img src="./figures/unstallWithRoot.png" alt="unstallWithRoot" /></p>
+</li>
+</ul>
+<h3 id="在终端进行执行命令"><a class="header" href="#在终端进行执行命令">在终端进行执行命令</a></h3>
+<p>开发者可以直接在 VSCode 的终端面板使用编译构建命令（cjpm）对仓颉工程进行编译构建。初次使用需要重新启动 VSCode，即可在终端执行 cjpm 操作。</p>
+<p><img src="./figures/cpm.png" alt="cjpm" /></p>
+<h3 id="单击运行按钮运行工程"><a class="header" href="#单击运行按钮运行工程">单击运行按钮运行工程</a></h3>
+<p>开发者可以单击 .cj 文件编辑区的运行按钮来运行整个仓颉工程。</p>
+<p><img src="./figures/runCode.png" alt="runCode" /></p>
+<p>若整个工程中配置的 <code>output-type</code> 为 <code>executable</code>，则会在终端面板打印运行结果，否则只会显示编译的结果。</p>
+<p>若工程根目录的 <code>cjpm.toml</code> 文件使用 <code>workspace</code> 模式配置，则文件编辑区不提供运行按钮。</p>
+<p>单击运行按钮执行的编译过程是结合当前的 <code>cjpm.toml</code> 和 <code>cjpm_build_args.json</code> 的配置来进行的。</p>
+<h3 id="单击锤子按钮编译工程"><a class="header" href="#单击锤子按钮编译工程">单击锤子按钮编译工程</a></h3>
+<p>开发者可以单击 .cj 文件编辑区的锤子按钮来编译整个仓颉工程。</p>
+<p><img src="./figures/hammerButton.png" alt="hammerButton" /></p>
+<p>单击锤子按钮执行的编译过程与运行按钮一致，也是结合当前的 <code>cjpm.toml</code> 和 <code>cjpm_build_args.json</code> 的配置来进行的。不同的是，若整个工程中配置的 <code>output-type</code> 为 <code>executable</code>，则运行按钮在编译完成后再运行整个工程，而锤子按钮只会编译工程，无后续运行动作。</p>
+<h2 id="可视化配置编译构建参数"><a class="header" href="#可视化配置编译构建参数">可视化配置编译构建参数</a></h2>
+<p>在编译构建过程中需要配置工程目录中的 <code>cjpm.toml</code> 和 <code>cjpm_build_args.json</code> 文件，方法如下：</p>
+<ul>
+<li>直接修改 <code>cjpm.toml</code> 和 <code>cjpm_build_args.json</code> 文件。</li>
+</ul>
+<p><img src="./figures/editone.png" alt="editOne" /></p>
+<ul>
+<li>使用快捷键 F1，或同时按下 Ctrl + Shift + P（macOS 系统为 Command + Shift + P）打开命令面板，在命令面板执行 <code>Cangjie: Edit Configuration (UI)</code> 命令打开可视化编辑的 UI 界面。</li>
+</ul>
+<p><img src="./figures/editTwo.png" alt="editTwo" /></p>
+<ul>
+<li>单击编辑页面右上角的画笔按钮，跳转到可视化编辑的 UI 界面。</li>
+</ul>
+<p><img src="./figures/editThree.png" alt="editThree" /></p>
+<p>对于工程文件中 <code>.vscode</code> 目录下的 <code>cjpm_build_args.json</code> 的配置，通过复选框或者输入框的形式确定编译要使用的参数，修改后会同步到 <code>cjpm_build_args.json</code> 文件中。</p>
+<p>对于工程中 <code>cjpm.toml</code> 文件的配置，开发者输入内容并将光标移至输入框外，即可生效到 <code>cjpm.toml</code> 文件中。</p>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>当仓颉工程中的 <code>cjpm.toml</code> 文件和参数配置界面同时在 VSCode 的编辑区显示时，对 <code>cjpm.toml</code> 文件的修改不会同步到 UI 界面上。</p>
+</blockquote>
+<p>对于构建参数 <code>cross-compile-configuration</code>，可以在 <code>cross-compile-configuration</code> 下单击 <code>Add Configuration</code> 按钮添加选项。</p>
+<p>在 key 和 compile-option 处填写对应内容，单击对勾按钮或按下回车键，与 <code>cjpm.toml</code> 保持同步。若想删除该条配置，只需单击该条选项的叉号按钮。</p>
+<p>添加的配置在不填写第一个字段 key 就直接单击对勾按钮或按下回车键，会出现必须要填写第一个字段的提示，该场景下提交的内容不会同步到 <code>cjpm.toml</code> 中。在 UI 界面目前不会直接删除该条配置，刷新 UI 界面后会自动删除，内容与 <code>cjpm.toml</code> 保持一致。<code>package-configuration</code> 和 <code>cross-compile-configuration</code> 类似，<code>package-configuration</code> 新增配置时第一个字段为空的场景如下图所示。</p>
+<p><img src="./figures/noKey.png" alt="noKey.png" /></p>
+<p>对于 <code>package-configuration</code> 参数，其添加和修改方式与 <code>cross-compile-configuration</code> 一致。其中 <code>output-type</code> 字段为下拉框选项，其可选的类型有 executable、static、dynamic 和 null。新添加的配置字段的初始化类型为 null，开发者可以根据自己的需要进行选择。当选择为 null 时，该字段同步到 <code>cjpm.toml</code> 后会删除该字段。</p>
+<blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li>
+<p>在 UI 界面配置 <code>cjpm.toml</code> 的内容时，只有对于 <code>customized-option</code> 参数中配置的 <code>--cfg</code> 中路径中的 <code>=</code> 需要转义，其他符号不需要添加转义符号。比如：</p>
+<ul>
+<li>
+<p>在 UI 界面对 <code>customized-option</code> 参数配置的 <code>--cfg</code> 路径中包含 <code>=</code> 时，<code>=</code> 需要转义，即 <code>--cfg=&quot;D:/projects/cang\=jie&quot;</code>。</p>
+</li>
+<li>
+<p>在 UI 界面对 <code>package-configuration</code> 字段的 p1 配置 <code>compile-option</code> 时，对 <code>--link-options</code> 设置内容时不需要转义，只需要加引号即可，即 <code>--link-options=&quot;-rpath=xxx&quot;</code>。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>直接在 <code>cjpm.toml</code> 中填写时，符号都需要加转义符号。比如：</p>
+<ul>
+<li>
+<p>在 <code>cjpm.toml</code> 中对<code>customized-option</code> 参数配置的 <code>--cfg</code> 路径中包含 <code>=</code> 时，所有符号都需要转义，即 <code>--cfg=\&quot;D:/projects/cang\\=jie\&quot;</code>。</p>
+</li>
+<li>
+<p>在 <code>cjpm.toml</code> 中对<code>package-configuration</code> 字段的 p1 配置 <code>compile-option</code> 时，所有符号都需要转义，即 <code>--link-options=\&quot;-rpath=xxx\&quot;</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>对于 <code>customized-option</code> 参数，其添加修改方式与 <code>cross-compile-configuration</code> 一致。</p>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p><code>customized-option</code> 的条件不能设置内置的条件（@When[os == &quot;Linux&quot;] 不能作为 <code>customized-option</code> 的条件，即 &quot;cfg1&quot; : &quot;--cfg =&quot;os=Linux&quot;&quot; 是不允许的），只能添加开发者自定义条件。具体请参考 Cangjie &gt; Language Guide 文档的 <a href="../../../user_manual/source_zh_cn/Chapter_20_conditional-compilation.html"><code>条件编译</code></a> 章节。</p>
+</blockquote>
+<h2 id="三方库便捷导入"><a class="header" href="#三方库便捷导入">三方库便捷导入</a></h2>
+<h3 id="导入方式"><a class="header" href="#导入方式">导入方式</a></h3>
+<blockquote>
+<p><strong>注意：</strong></p>
+<p>三方库便捷导入仅适用于当前打开的仓颉工程的主模块。如果其他子模块需要便捷导入三方库，可以单独以工程的方式打开使用。</p>
+</blockquote>
+<p>在仓颉工程中，可以导入外部的三方库，并且在 <code>cjpm.toml</code> 中进行配置。</p>
+<p><code>dependencies</code>：当前仓颉模块依赖项目，包含了当前构建所需要的其它模块的配置信息，包含版本号和路径。这两个选项必须全部配置，否则会执行失败并报错。在使用过程中，优先使用此方式进行项目依赖导入。</p>
+<p><code>dev-dependencies</code>：使用方式与 <code>dependencies</code> 一致，具有与 <code>dependencies</code> 字段相同的格式。用于指定仅在开发过程中使用的依赖项，而不是构建主项目所需的依赖项，例如仅在测试中使用的依赖项。如果开发者是库作者，则应将此字段用于此库的下游用户不需要使用的依赖项。</p>
+<p><code>bin-dependencies</code>：非特殊需求场景下，建议使用 <code>dependencies</code> 的方式导入依赖。目前仓颉插件仅支持本地的 <code>bin-dependencies</code> 配置。</p>
+<p>当前仓颉模块依赖已编译好的 <code>package</code>，有两种导入形式。以导入下述 <code>pro0</code> 模块和 <code>pro1</code> 模块的三个包来举例说明。</p>
+<pre><code class="language-text">test
+
+├── pro0
+
+│    ├── libpro0_xoo.so
+
+│    ├── xoo.cjo
+
+│    ├── libpro0_yoo.so
+
+│    └── yoo.cjo
+
+├── pro1
+
+│    ├── libpro1_zoo.so
+
+│    └── zoo.cjo
+
+├── src
+
+│    └── main.cj
+
+└── cjpm.toml
+</code></pre>
+<p>方式一：通过 <code>package-option</code> 导入。</p>
+<pre><code class="language-text">[target]
+    [target.x86_64-w64-mingw32]
+        [target.x86_64-w64-mingw32.bin-dependencies]
+            [target.x86_64-w64-mingw32.bin-dependencies.package-option]
+                pro0_xoo = &quot;./test/pro0/xoo.cjo&quot;
+                pro0_yoo = &quot;./test/pro0/yoo.cjo&quot;
+                pro1_zoo = &quot;./test/pro1/zoo.cjo&quot;
+</code></pre>
+<p>该选项是 map 结构，<code>pro0_xoo</code> 名称作为 key，与 <code>libpro0_xoo.so</code> 相对应，前端文件 .cjo 的路径作为 value，对应于该 .cjo 的 <code>.a</code> 和 <code>.so</code> 需放置在相同路径下，且对应的 .cjo 模块文件必须与模块名来源文件放置在相同的文件夹下，该文件夹下不能有任何其他文件或文件夹。</p>
+<p>方式二：通过 <code>path-option</code> 导入。</p>
+<pre><code class="language-text">[target]
+    [target.x86_64-w64-mingw32]
+        [target.x86_64-w64-mingw32.bin-dependencies]
+            path-option = [&quot;./test/pro0&quot;, &quot;./test/pro1&quot;]
+</code></pre>
+<p>该选项是字符串数组结构，每个元素代表待导入的路径名称。<code>cjpm</code> 会自动导入该路径下所有符合规则的仓颉库包，这里的合规性是指库名称的格式为<code>模块名_包名</code>。库名称不满足该规则的包只能通过 <code>package-option</code> 选项进行导入。</p>
+<p>如果同时通过 <code>package-option</code> 和 <code>path-option</code> 导入相同的包，则 <code>package-option</code> 字段的优先级更高。</p>
+<p>导航栏视图呈现如下形式。</p>
+<p><img src="./figures/packageRequires.png" alt="packageRequires" /></p>
+<p>开发者可以在其对应的导入方式子目录下导入工程需要的模块。在导航栏单击画笔进入 UI 界面。</p>
+<p><img src="./figures/packageRequireUI.png" alt="packageRequireUI" /></p>
+<p><code>ffi</code>：当前仓颉模块外部依赖 C 库，配置了依赖该库所需要的信息，包含名称和路径字段。资源管理器的视图栏中的 <code>CANGJIE LIBRARY</code> 栏，可以方便开发者添加这几类外部库。</p>
+<p>在工程初始化后，可以通过单击分类栏的加号按钮添加对应的三方库。</p>
+<p><img src="./figures/extraLibAdd.png" alt="extraLibAdd.png" /></p>
+<p>也可以通过单击三方库上的减号删除对应的库。</p>
+<p>可以通过单击视图栏的编辑按钮，打开三方库导入的可视化界面来导入或删除三方库。</p>
+<p><img src="./figures/configLib.png" alt="configLib" /></p>
+<p>以上删除和添加操作均同步到工程的 <code>module.json</code> 文件中。</p>
+<h3 id="导入限制"><a class="header" href="#导入限制">导入限制</a></h3>
+<ul>
+<li>项目中需要链接动态库（C 库和仓颉库）时，需自行设置 <code>LD_LIBRARY_PATH</code>，执行 <code>export LD_LIBRARY_PATH=xxx:$LD_LIBRARY_PATH</code>。</li>
+<li>在 <code>cjpm.toml</code> 中修改内容不会直接影响 treeView 和 UI 界面，需要单击 treeView 或 UI 界面进行手动更新。</li>
+<li>在 treeView 中的库分类处添加外部库，且此时库分类目录是关闭状态，则添加后需要打开目录才能查看。</li>
+<li>UI 界面的字段暂不支持 hover 显示内容的功能。</li>
+<li>UI 界面非开发者添加的外部库，其路径与 <code>cjpm.toml</code> 保持一致。开发者添加的库和 treeView 均显示绝对路径。</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../source_zh_cn/IDE/create_cj_project.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../source_zh_cn/IDE/debug_service.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../source_zh_cn/IDE/create_cj_project.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../source_zh_cn/IDE/debug_service.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../assets/elasticlunr.js"></script>
+        <script src="../../assets/fzf.umd.js"></script>
+        <script src="../../assets/sidebar.js"></script>
+
+
+    </div>
+    </body>
+</html>

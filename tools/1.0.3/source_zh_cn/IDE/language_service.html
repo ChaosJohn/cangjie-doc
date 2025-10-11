@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" class="light" dir="ltr">
+    <head>
+            <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({
+                    showProcessingMessages: false,
+                    messageStyle: "none",
+                    extensions: ['tex2jax.js'],
+                    jax: ['input/TeX', 'output/HTML-CSS'],
+                    tex2jax: {
+                        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                        processEscapes: true
+                    },
+                    "HTML-CSS": { availableFonts: ["STIX", "TeX"] }
+                });
+            </script>
+            
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>语言服务 - 仓颉编程语言工具使用指南</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../assets/style.css">
+        <link rel="stylesheet" href="../../assets/theme.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/ide_plug-in_overview.html"><strong aria-hidden="true">1.</strong> IDE 插件使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/IDE/install.html"><strong aria-hidden="true">1.1.</strong> 安装指导</a></li><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/language_service.html" class="active"><strong aria-hidden="true">1.2.</strong> 语言服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/create_cj_project.html"><strong aria-hidden="true">1.3.</strong> 创建仓颉工程</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/compilation_and_building.html"><strong aria-hidden="true">1.4.</strong> 编译构建</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/debug_service.html"><strong aria-hidden="true">1.5.</strong> 调试服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/command-line_tools_integration.html"><strong aria-hidden="true">1.6.</strong> 命令行工具集成</a></li></ol></li><li class="chapter-item "><a href="../../source_zh_cn/tools/user_manual_cjnative.html"><strong aria-hidden="true">2.</strong> 命令行工具使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/tools/cjpm_manual_cjnative.html"><strong aria-hidden="true">2.1.</strong> 包管理工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjdb_manual_cjnative.html"><strong aria-hidden="true">2.2.</strong> 调试工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjlint_manual.html"><strong aria-hidden="true">2.3.</strong> 静态检查工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjfmt_manual.html"><strong aria-hidden="true">2.4.</strong> 格式化工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjcov_manual_cjnative.html"><strong aria-hidden="true">2.5.</strong> 覆盖率工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjprof_manual_cjnative.html"><strong aria-hidden="true">2.6.</strong> 性能分析工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjtrace_recover_manual_cjnative.html"><strong aria-hidden="true">2.7.</strong> 异常堆栈信息还原工具</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">仓颉编程语言工具使用指南</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="语言服务"><a class="header" href="#语言服务">语言服务</a></h1>
+<p>语言服务工具为开发者提供如下功能：语法高亮、自动补全、定义跳转、查找引用、诊断报错、选中高亮、悬浮提示、签名帮助和重命名等。</p>
+<blockquote>
+<p><strong>说明：</strong></p>
+<ul>
+<li><strong>项目根目录 (PROJECTROOT)</strong>：仓颉语言服务插件以开发者当前打开的文件夹作为项目根目录 PROJECTROOT，且仅对该目录下的仓颉源码提供语言服务支持。</li>
+<li><strong>模块命名</strong>：如如未显式指定模块名称，默认将项目根目录 PROJECTROOT 名称作为模块名，便于导入 src 目录下的包。</li>
+<li><strong>源码支持范围</strong>：PROJECTROOT/src 下称为<strong>src 下仓颉源码</strong>（支持语言服务）；除了 <strong>src 下仓颉源码</strong>，项目根目录 PROJECTROOT 下的其他所有源码称为<strong>非 src 下仓颉源码</strong>（支持语言服务）；项目根目录 PROJECTROOT 之外的仓颉源码称为<strong>外部源码</strong>（暂不支持语言服务）。</li>
+<li><strong>导入能力</strong>：<strong>非 src 下仓颉源码</strong>中，每个文件夹都作为一个包，包名的声明和包的编译方式与<strong>src 下仓颉源码</strong>顶层包（即 default 包）处理方式保持一致。<strong>非 src 下仓颉源码</strong>可以导入标准库的包以及<strong>src 下仓颉源码</strong>中自定义的包，<strong>非 src 下仓颉源码</strong>的包无法被其他包导入。</li>
+<li><strong>宏展开依赖</strong>：仓颉语言服务的宏展开依赖宏的动态库，如果涉及自定义宏展开的代码，需要先编译出动态库，然后再启动语言服务。</li>
+<li><strong>日志开关</strong>：仓颉语言服务的日志默认关闭。开发者如果需要开启语言服务日志输出，可以在插件设置中开启<strong>Cangjie Log</strong>选项后重启 VSCode，日志可以在插件安装目录下的<strong>log.txt</strong>文件查看。</li>
+</ul>
+</blockquote>
+<h2 id="代码高亮"><a class="header" href="#代码高亮">代码高亮</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，即可看到代码高亮效果。VSCode 不同主题显示的代码高亮颜色不同，支持对代码运算符、类、注释、函数、关键字、数字、包名、字符串、变量等进行高亮显示。</p>
+<p><img src="./figures/sema.png" alt="sema" /></p>
+<h2 id="自动补全"><a class="header" href="#自动补全">自动补全</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，输入关键字、变量或 . 符号，在光标右侧提示候选内容。可以用上下方向键快速选择想要的内容（需要切换为系统默认输入法），使用 Enter 键或 Tab 键补全。</p>
+<p><img src="./figures/complete1.png" alt="compelte1" /></p>
+<p><img src="./figures/complete2.png" alt="complete2" /></p>
+<p>对于带参数的函数或者泛型提供模块化补齐，即当函数有参数或者带泛型时，选择函数补齐项之后会出现参数格式化补齐，如下图所示。填充数值之后按下 Tab 键可以切换到下一个参数补齐，直至模块化补齐结束，或按下 Esc 键提前退出除当前选中模块。</p>
+<p><img src="./figures/completeFormat.png" alt="completeFormat" /></p>
+<h2 id="定义跳转"><a class="header" href="#定义跳转">定义跳转</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，鼠标悬停在目标上方，按下 Ctrl 键并单击鼠标左键触发定义跳转；或使用鼠标右键单击目标符号，选择 Go to Definition 执行定义跳转；或按下快捷键 F12 执行定义跳转。</p>
+<p><img src="./figures/definition.png" alt="definition" /></p>
+<blockquote>
+<p><strong>说明：</strong></p>
+<p>在符号使用的地方使用定义跳转会跳转到符号定义处，支持跨文件跳转。
+在符号定义处使用定义跳转，如果此符号没被引用过，光标会跳转到符号左端。
+如果符号在其他地方被引用，会触发查找引用。</p>
+</blockquote>
+<h2 id="跨语言跳转"><a class="header" href="#跨语言跳转">跨语言跳转</a></h2>
+<p>语言服务插件支持 Cangjie 语言到 C 语言的跳转功能，VSCode 打开仓颉工程中的 .cj 文件，鼠标悬停在 Cangjie 互操作函数上方，按下 Ctrl 键并单击鼠标左键触发定义跳转；或使用鼠标右键单击目标符号，选择 Go to Definition 执行定义跳转；或按下快捷键 F12 执行定义跳转。</p>
+<h3 id="前置条件"><a class="header" href="#前置条件">前置条件</a></h3>
+<ul>
+<li>本地安装华为自研 C++ 插件。</li>
+<li>在仓颉插件上设置需要跳转的 C 语言源码存放目录。</li>
+<li>在当前工程下创建 build 文件夹，存放 compile_commands.json 文件（该文件可通过 cmake 命令生成），用于创建指定文件夹的索引文件。</li>
+</ul>
+<h3 id="跳转效果"><a class="header" href="#跳转效果">跳转效果</a></h3>
+<p>foreign 函数会在开发者设置的目录下查找对应的 C 语言函数，若找到则跳转至 C 语言源码的函数位置。除上述场景外均保持插件原有的定义跳转。</p>
+<p><img src="./figures/crossJump.png" alt="crossJump" /></p>
+<h2 id="查找引用"><a class="header" href="#查找引用">查找引用</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，使用鼠标右键单击目标符号，选择 Find All References 执行符号引用预览，单击预览条目，可以跳转到对应引用处。</p>
+<p><img src="./figures/reference.png" alt="reference" /></p>
+<h2 id="诊断报错"><a class="header" href="#诊断报错">诊断报错</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，当源码文件出现不符合仓颉语法或语义规则的代码时，会在相关代码段出现红色波浪下划线，如下图所示，当鼠标悬停在上面，可以提示相应的报错信息。修改正确后，诊断报错自行消失。</p>
+<p><img src="./figures/diag.png" alt="diag" /></p>
+<h2 id="选中高亮"><a class="header" href="#选中高亮">选中高亮</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，光标定位在一个变量或函数名处，当前文件中该变量的声明处以及其使用处都会高亮显示。</p>
+<p><img src="./figures/docHighlight.png" alt="docHighlight" /></p>
+<h2 id="悬浮提示"><a class="header" href="#悬浮提示">悬浮提示</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，光标悬浮在变量处，可以提示类型信息。</p>
+<p><img src="./figures/hover1.png" alt="hover1" /></p>
+<p>悬浮在函数名处，可以提示函数原型。</p>
+<p><img src="./figures/hover2.png" alt="hover2" /></p>
+<h2 id="定义搜索"><a class="header" href="#定义搜索">定义搜索</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，同时按下 Ctrl 键和 T 键，弹出搜索框，输入想要搜索的符号定义名，会显示出符合条件的搜索结果。单击搜索结果条目，可以跳转到对应的定义位置处。</p>
+<p><img src="./figures/searchsymbol_open.png" alt="searchsymbol_open" /></p>
+<p>目前支持搜索的定义类型有：class、interface、enum、struct、typealias、toplevel 的函数、toplevel 的变量、prop、enum 构造器、成员函数和成员变量。</p>
+<h2 id="重命名"><a class="header" href="#重命名">重命名</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，光标定位在想要修改的自定义名称上，右键选择 Rename Symbol 或按下快捷键 F2 打开重命名编辑框。</p>
+<p><img src="./figures/prepareRename.png" alt="prepareRename" /></p>
+<p>编辑完毕按下回车键，完成重命名的实现。</p>
+<p><img src="./figures/onRename.png" alt="onRename" /></p>
+<p>目前支持重命名的类型有：class、interface、enum、struct、func、type、泛型、变量和自定义宏。</p>
+<h2 id="大纲视图显示"><a class="header" href="#大纲视图显示">大纲视图显示</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，在左侧 OUTLINE 视图中显示当前文件的大纲。目前支持两层结构的显示，第一层主要为 toplevel 中定义的声明，第二层主要为构造器及成员。</p>
+<p><img src="./figures/outline.png" alt="outline" /></p>
+<p>目前支持大纲视图显示的类型有：class、interface、enum、struct、typealias、toplevel 的函数、toplevel 的变量、prop、enum 构造器、成员函数和成员变量。</p>
+<h2 id="面包屑导航"><a class="header" href="#面包屑导航">面包屑导航</a></h2>
+<p>VSCode 打开仓颉工程中的任意 .cj 文件，光标定位在符号处，点击面包屑导航，显示符号当前所处的位置，以及该符号在整个工程中的位置路径。</p>
+<p><img src="./figures/Breadcrumb.png" alt="Breadcrumb" /></p>
+<p>目前支持面包屑导航的类型有：class、interface、enum、struct、typealias、toplevel 的函数、toplevel 的变量、prop、enum 构造器、成员函数和成员变量。</p>
+<h2 id="签名帮助"><a class="header" href="#签名帮助">签名帮助</a></h2>
+<p>VSCode 在输入左括号和逗号时会触发签名帮助。触发后，只要还在函数参数范围内，提示框会一直随光标移动（可与补全共存）。如下图所示，开发者可以看到当前函数的参数信息，以及当前函数位置参数的高亮效果。</p>
+<p><img src="./figures/signaturehelp.png" alt="signaturehelp" /></p>
+<h2 id="显示类型层次结构"><a class="header" href="#显示类型层次结构">显示类型层次结构</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，光标定位在想要查看的自定义名称上，右键选择 Show Type Hierarchy，在左侧就会显示该类型层次结构。Object 类型默认为所有类的父类，该功能下不会显示。</p>
+<p>目前支持显示层次结构的类型有：class、interface、enum 和 struct。</p>
+<p><img src="./figures/typeHierarchy1.png" alt="typeHierarchy" /></p>
+<p>单击如图标记所示位置，可以在显示子类和父类之间切换。</p>
+<p><img src="./figures/typeHierarchy2.png" alt="typeHierarchy" /></p>
+<h2 id="调用类型层次结构"><a class="header" href="#调用类型层次结构">调用类型层次结构</a></h2>
+<p>VSCode 打开仓颉工程中的 .cj 文件，光标定位在函数名上，右键选择 Show Call Hierarchy，在左侧就会显示该函数的调用类型层次结构。</p>
+<p><img src="./figures/callHierarchy1.png" alt="callHierarchy" /></p>
+<p>通过单击标识位置可以在显示调用函数和被调用函数之间切换。</p>
+<p><img src="./figures/callHierarchy2.png" alt="callHierarchy" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../source_zh_cn/IDE/install.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../source_zh_cn/IDE/create_cj_project.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../source_zh_cn/IDE/install.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../source_zh_cn/IDE/create_cj_project.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../assets/elasticlunr.js"></script>
+        <script src="../../assets/fzf.umd.js"></script>
+        <script src="../../assets/sidebar.js"></script>
+
+
+    </div>
+    </body>
+</html>

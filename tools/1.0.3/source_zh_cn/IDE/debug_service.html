@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" class="light" dir="ltr">
+    <head>
+            <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({
+                    showProcessingMessages: false,
+                    messageStyle: "none",
+                    extensions: ['tex2jax.js'],
+                    jax: ['input/TeX', 'output/HTML-CSS'],
+                    tex2jax: {
+                        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+                        processEscapes: true
+                    },
+                    "HTML-CSS": { availableFonts: ["STIX", "TeX"] }
+                });
+            </script>
+            
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>调试服务 - 仓颉编程语言工具使用指南</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../assets/style.css">
+        <link rel="stylesheet" href="../../assets/theme.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/ide_plug-in_overview.html"><strong aria-hidden="true">1.</strong> IDE 插件使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/IDE/install.html"><strong aria-hidden="true">1.1.</strong> 安装指导</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/language_service.html"><strong aria-hidden="true">1.2.</strong> 语言服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/create_cj_project.html"><strong aria-hidden="true">1.3.</strong> 创建仓颉工程</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/compilation_and_building.html"><strong aria-hidden="true">1.4.</strong> 编译构建</a></li><li class="chapter-item expanded "><a href="../../source_zh_cn/IDE/debug_service.html" class="active"><strong aria-hidden="true">1.5.</strong> 调试服务</a></li><li class="chapter-item "><a href="../../source_zh_cn/IDE/command-line_tools_integration.html"><strong aria-hidden="true">1.6.</strong> 命令行工具集成</a></li></ol></li><li class="chapter-item "><a href="../../source_zh_cn/tools/user_manual_cjnative.html"><strong aria-hidden="true">2.</strong> 命令行工具使用指南</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../source_zh_cn/tools/cjpm_manual_cjnative.html"><strong aria-hidden="true">2.1.</strong> 包管理工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjdb_manual_cjnative.html"><strong aria-hidden="true">2.2.</strong> 调试工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjlint_manual.html"><strong aria-hidden="true">2.3.</strong> 静态检查工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjfmt_manual.html"><strong aria-hidden="true">2.4.</strong> 格式化工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjcov_manual_cjnative.html"><strong aria-hidden="true">2.5.</strong> 覆盖率工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjprof_manual_cjnative.html"><strong aria-hidden="true">2.6.</strong> 性能分析工具</a></li><li class="chapter-item "><a href="../../source_zh_cn/tools/cjtrace_recover_manual_cjnative.html"><strong aria-hidden="true">2.7.</strong> 异常堆栈信息还原工具</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">仓颉编程语言工具使用指南</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="调试服务"><a class="header" href="#调试服务">调试服务</a></h1>
+<p>仓颉编程语言提供了可视化调试服务，方便开发者调试仓颉程序。该插件提供如下功能：</p>
+<ul>
+<li>Launch：启动调试进程</li>
+<li>Attach：附加到已启动的进程</li>
+<li>支持源码断点、函数断点、数据断点、汇编断点</li>
+<li>支持源码内单步调试、运行到光标处、步入、步出、继续、暂停、重启、停止调试</li>
+<li>支持仓颉-C 互操作调试，仓颉代码 continue、步入到 C 代码</li>
+<li>支持汇编内单步、步入、步出</li>
+<li>支持表达式求值</li>
+<li>支持变量查看和修改</li>
+<li>支持在调试控制台中查看变量</li>
+<li>支持查看被调试程序的输出信息</li>
+<li>支持反向调试</li>
+<li>支持 Unittest 的运行和调试</li>
+<li>支持 CJVM 后端调试</li>
+</ul>
+<blockquote>
+<p><strong>说明：</strong></p>
+<ul>
+<li>如果第一次使用 VSCode 调试功能，可以查看 <a href="https://code.visualstudio.com/docs/editor/debugging">VSCode 调试服务使用手册</a>。</li>
+<li>受调试器限制，循环代码中存在条件断点时，执行 PAUSE 操作可能导致后续调试无法进行。</li>
+<li>VARIABLES 视图修改变量时，不会触发存在依赖关系的变量的刷新。</li>
+<li>调试服务依赖仓颉 SDK 包内 liblldb 动态库文件时，请提前配置仓颉 SDK 路径。</li>
+<li>CJVM 后端调试能力逐步支持中，在当前阶段，调试服务的说明中如未明确指出是针对 CJVM 后端，则默认其为针对 CJNative 后端的说明。</li>
+<li>调试插件客户端与服务端通过 Socket 通信，插件自动从 9995 端口开始查找可用端口，并在 127.0.0.1 上启动 Socket server 监听该端口。</li>
+<li>Windows 环境下读写类型数据断点设置条件后，系统存在概率性仅上报一次停止事件，数据断点可能仅在第一次触发时有效，后续的读写操作可能不会再次触发断点。</li>
+</ul>
+</blockquote>
+<h2 id="启动调试"><a class="header" href="#启动调试">启动调试</a></h2>
+<h3 id="launch-模式"><a class="header" href="#launch-模式">Launch 模式</a></h3>
+<p><strong>仓颉工程调试</strong></p>
+<ol>
+<li>未创建 <code>launch.json</code> 文件时，单击 Run and Debug &gt; Cangjie(cjdb) Debug 启动调试。</li>
+<li>已创建 <code>launch.json</code> 文件时，在 <code>launch.json</code> 文件中单击 Add Configuration &gt; Cangjie Debug (CJNative) : launch &gt; Build And Debug Cangjie Project 添加调试配置，选择添加的配置启动调试。</li>
+</ol>
+<p><strong>单文件调试</strong></p>
+<p>针对单文件调试，可以选中需要调试的仓颉源文件，右键选择 Cangjie: Build and Debug File，该操作会生成编译配置文件 <code>task.json</code> 和编译脚本，并且会根据  <code>task.json</code> 配置执行脚本，编译出可调试的二进制文件，然后启动调试。</p>
+<p><img src="./figures/start.png" alt="start" /></p>
+<p><strong>调试手动编译的可执行文件</strong></p>
+<ol>
+<li>使用 cjc 编译器或 cjpm 手动编译出可调试的二进制文件。</li>
+<li>单击 Run and Debug &gt; Cangjie(cjdb) Debug &gt; Cangjie (CJNative): launch &gt; Choose Executable File Later 启动调试。</li>
+</ol>
+<p><strong>Launch debugMacro 模式仓颉工程调试宏展开后的代码</strong></p>
+<p>调试宏展开后的代码文件（后缀为 <code>.marcocall</code>），此时宏对应的原文件无法调试。</p>
+<p><strong>调试远程进程（支持 Linux 远程到 Linux）</strong></p>
+<p>Launch 模式下调试远程进程时，调试服务会将本地编译的二进制文件推送到远程平台，然后调试远程平台的二进制文件。</p>
+<ol>
+<li>在远程平台启动 lldb-server。建议使用 cjdb 自带的 lldb-server，路径为 /cangjie/third_party/llvm/lldb/bin/lldb-server，启动命令 <code>/**/**/cangjie/third_party/llvm/lldb/bin/lldb-server p --listen &quot;*:1234&quot; --server</code>。</li>
+<li>在本地机器使用 cjc 编译器或 cjpm 手动编译出可调试的二进制文件。</li>
+<li>单击 Run and Debug 按钮启动调试。</li>
+</ol>
+<p><code>launch.json</code> 配置示例如下：</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;Cangjie Debug (cjdb): test&quot;,
+    &quot;program&quot;: &quot;/**/**/test&quot;,
+    &quot;request&quot;: &quot;launch&quot;,
+    &quot;type&quot;: &quot;cangjieDebug&quot;,
+    &quot;externalConsole&quot;: false,
+    &quot;remote&quot;: true,
+    &quot;remoteCangjieSdkPath&quot;: &quot;/**/**/cangjie&quot;,
+    &quot;remoteFilePath&quot;: &quot;/**/**/test&quot;,
+    &quot;remoteAddress&quot;: &quot;127.0.0.1:1234&quot;,
+    &quot;remotePlatform&quot;: &quot;remote-linux&quot;
+}
+</code></pre>
+<p><strong>配置属性</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>属性</th><th>类型</th><th>描述</th></tr></thead><tbody>
+<tr><td>program</td><td>string</td><td>被调试进程的全路径，该文件将推送到远程平台，例如：/home/cangjieProject/build/bin/main</td></tr>
+<tr><td>remote</td><td>boolean</td><td>启动远程 Launch 进程，remote 为 true</td></tr>
+<tr><td>remoteCangjieSdkPath</td><td>string</td><td>远程平台仓颉 SDK 路径</td></tr>
+<tr><td>remoteFilePath</td><td>string</td><td>远程平台存放推送文件的全路径，请确保路径 /home/test/ 合法且存在，<code>main</code> 为推送到远程的文件名，例如：/home/cangjieProject/build/bin/main</td></tr>
+<tr><td>remoteAddress</td><td>string</td><td>被调试进程所在的机器 IP 和 lldb-server 监听的端口号，数据格式：ip:port</td></tr>
+<tr><td>remotePlatform</td><td>string</td><td>远程的平台，仅支持 remote-linux（远程 Linux 平台）</td></tr>
+<tr><td>env</td><td>object</td><td>为被调试程序设置运行时的环境变量，该配置将覆盖系统环境变量，如需在系统配置基础上追加配置，在配置项结尾增加 ${env:PATH}。例如：&quot;PATH&quot;:&quot;/home/user/bin: ${env:PATH}&quot;, &quot;LD_LIBRARY_PATH&quot;:&quot;/home/user/bin:${env:LD_LIBRARY_PATH}&quot;。</td></tr>
+</tbody></table>
+</div>
+<h3 id="attach-模式"><a class="header" href="#attach-模式">Attach 模式</a></h3>
+<p><strong>调试本地进程</strong></p>
+<ol>
+<li>在 <code>launch.json</code> 文件中单击 Add Configuration &gt; Cangjie Debug (CJNative) : attach 添加调试配置，选择添加的配置启动调试。</li>
+<li>在弹出界面选择要调试的进程即可启动调试。</li>
+</ol>
+<p><strong>调试远程进程</strong></p>
+<ol>
+<li>在本地机器编译出可调试二进制文件并将该文件拷贝到远程机器。</li>
+<li>在远程机器启动 lldb-server，建议使用 cjdb 自带 lldb-server，路径为 /cangjie/third_party/llvm/lldb/bin/lldb-server，启动命令 <code>/**/**/cangjie/third_party/llvm/lldb/bin/lldb-server p --listen &quot;*:1234&quot; --server</code>。</li>
+<li>在远程机器启动被调试的二进制文件。</li>
+<li>在本地机器配置 <code>launch.json</code> 文件，并启动调试。</li>
+</ol>
+<p><code>launch.json</code> 配置属性：</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;Cangjie Debug (cjdb): test&quot;,
+    &quot;processId&quot;: &quot;8888&quot;,
+    &quot;program&quot;: &quot;/**/**/test&quot;,
+    &quot;request&quot;: &quot;attach&quot;,
+    &quot;type&quot;: &quot;cangjieDebug&quot;,
+    &quot;remote&quot;: true,
+    &quot;remoteAddress&quot;: &quot;127.0.0.1:1234&quot;,
+    &quot;remotePlatform&quot;: &quot;remote-linux&quot;
+}
+</code></pre>
+<p><strong>配置属性</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>属性</th><th>类型</th><th>描述</th></tr></thead><tbody>
+<tr><td>processId</td><td>string</td><td>被调试进程的 pid（配置 pid 时优先 attach pid，未配置 pid 则 attach program）</td></tr>
+<tr><td>program</td><td>string</td><td>被调试进程的全路径，例如：/home/cangjieProject/build/bin/main</td></tr>
+<tr><td>remote</td><td>boolean</td><td>attach 本机器进程，remote 为 false；若 attach 远程进程，将 remote 设置为 true</td></tr>
+<tr><td>remoteAddress</td><td>string</td><td>远程调试时被调试进程所在的机器 IP 和 lldb-server 监听的端口号，数据格式：ip:port</td></tr>
+<tr><td>remotePlatform</td><td>string</td><td>远程调试时远程的平台，仅支持 remote-linux（远程 linux 平台）</td></tr>
+</tbody></table>
+</div>
+<h2 id="查看调试信息"><a class="header" href="#查看调试信息">查看调试信息</a></h2>
+<p>当进程处于 stopped 状态时，可以在 VSCode 界面左侧查看断点、当前线程、堆栈信息和变量，支持编辑断点和修改变量。也可以在 Editor 窗口将鼠标悬停在变量名称上方查看变量值。支持在 TERMINAL 窗口查看被调试程序的输出信息。</p>
+<p><img src="./figures/debugInfo.png" alt="debugInfo" /></p>
+<h2 id="表达式求值"><a class="header" href="#表达式求值">表达式求值</a></h2>
+<ul>
+<li>在 WATCH 窗口添加按钮或空白处双击键入表达式。</li>
+<li>在 Debug Console 窗口键入表达式。</li>
+<li>在 Editor 窗口双击选中变量，右键选择 Evaluate in Debug Console。</li>
+</ul>
+<h2 id="程序控制"><a class="header" href="#程序控制">程序控制</a></h2>
+<ul>
+<li>
+<p>单击顶部调试工具栏上的图标控制程序，包括单步执行、步入、步出、继续、暂停、重启或停止程序。</p>
+<p><img src="./figures/debugControl1.png" alt="debugControl1.png" /></p>
+</li>
+<li>
+<p>在鼠标光标处单击右键选择 Run to Cursor。</p>
+<p><img src="./figures/runToCursor.png" alt="runToCursor" /></p>
+</li>
+<li>
+<p>在源码视图右键选择 Open Disassembly View 进入汇编视图。</p>
+<p><img src="./figures/openDisassemblyView.png" alt="openDisassemblyView" /></p>
+</li>
+</ul>
+<h2 id="调试控制台"><a class="header" href="#调试控制台">调试控制台</a></h2>
+<h3 id="执行-cjdb-命令"><a class="header" href="#执行-cjdb-命令">执行 cjdb 命令</a></h3>
+<p>在调试控制台中输入 cjdb 命令来调试程序，命令的格式需要以 <code>-exec</code> 开头，要执行的子命令必须是正确的 cjdb 命令。</p>
+<p>使用 cjdb 命令 <code>n</code> 执行单步调试的示例如下：</p>
+<pre><code class="language-shell">-exec n
+</code></pre>
+<p><img src="./figures/debugconsoleCjdbcommand.png" alt="debugconsoleCjdbcommand" /></p>
+<h3 id="查看变量"><a class="header" href="#查看变量">查看变量</a></h3>
+<p>在调试控制台中输入变量名称查看变量值：</p>
+<p><img src="./figures/debugconsoleVariable.png" alt="debugconsoleVariable" /></p>
+<h2 id="反向调试"><a class="header" href="#反向调试">反向调试</a></h2>
+<blockquote>
+<p><strong>说明：</strong></p>
+<ul>
+<li>反向调试基于记录重放，开启反向调试功能后，调试服务会记录开发者正向调试的所有停止点（断点 + 单步），以及停止点的线程、堆栈和变量等调试信息。进入反向调试模式，支持查看历史记录点的调试信息。</li>
+</ul>
+</blockquote>
+<h3 id="配置"><a class="header" href="#配置">配置</a></h3>
+<p>单击左下角齿轮图标，选择设置（Settings）选项，在搜索栏输入 cangjie，找到 Reverse Debug 选项，勾选 Enable reverse debug，开启程序调试历史停止点信息的自动记录。同时可以配置自动记录的线程个数、堆栈个数、变量作用域、复杂类型变量子变量的展开层数和子变量个数。修改配置后，需要重新启动仓颉调试。</p>
+<p><img src="./figures/reverseDebugConfig.png" alt="reverseDebugConfig" /></p>
+<h3 id="工具栏"><a class="header" href="#工具栏">工具栏</a></h3>
+<p>单击顶部调试工具栏上的时钟图标进入反向调试模式，使用工具栏上正反向继续、正反向单步控制程序，查看历史记录的线程、堆栈、变量信息，如下图所示。</p>
+<p><img src="./figures/reverseDebugOpen.png" alt="reverseDebugOpen" /></p>
+<p>单击顶部调试工具栏上的方块图标退出反向调试模式，调试会回到正向调试的最后停止点，如下图所示。</p>
+<p><img src="./figures/reverseDebugClose.png" alt="reverseDebugClose" /></p>
+<h3 id="反向断点"><a class="header" href="#反向断点">反向断点</a></h3>
+<blockquote>
+<p><strong>说明：</strong></p>
+<ul>
+<li>反向断点是一种特殊的源码断点（Log Point），正向调试过程中不会停止，也不会输出自动生成的 Log Message（用于标记反向断点）。</li>
+<li>在正向调试时，开发者提前设置反向断点，调试服务后台会记录进程走过的反向断点的调试信息。</li>
+<li>在进入反向调试模式时，反向断点会作为停止点（断点型），可以查看该断点处的线程堆栈变量等调试信息。</li>
+<li>在进入反向调试模式时，不支持设置反向断点。</li>
+</ul>
+</blockquote>
+<p>反向断点设置方式：</p>
+<ol>
+<li>
+<p>在仓颉源文件编辑器视图内右键选择 Cangjie: Add Reverse Breakpoint，为光标所在行设置一个反向断点。</p>
+<p><img src="./figures/lineReverseBreakpoint.png" alt="lineReverseBreakpoint" /></p>
+</li>
+<li>
+<p>在仓颉源文件上右键选择 Cangjie: Add Auto Reverse Breakpoints 插件会分析该文件内函数的入口和出口位置并自动设置反向断点。</p>
+<p><img src="./figures/fileReverseBreakpoint.png" alt="fileReverseBreakpoint" /></p>
+</li>
+<li>
+<p>在文件夹上右键选择 Cangjie: Add Auto Reverse Breakpoints 插件会分析该文件夹内仓颉源文件中的函数的入口和出口位置并自动设置反向断点。</p>
+<p><img src="./figures/folderReverseBreakpoint.png" alt="folderReverseBreakpoint" /></p>
+</li>
+</ol>
+<h3 id="时间线"><a class="header" href="#时间线">时间线</a></h3>
+<blockquote>
+<p><strong>说明：</strong></p>
+<p>时间线展示了反向调试模式下记录的所有停止点（断点+单步），通过时间线拖拽，可以查看历史停止点的信息。</p>
+</blockquote>
+<p>时间线入口位于 VSCode 右下方区域，可以在右下方的 Tab 标签行右键将时间线 Cangjie Debug Timeline 开启或隐藏，也可以在 View 菜单中选择 Open View 开启，如下图所示。</p>
+<p><img src="./figures/debugTimelineShow.png" alt="debugTimelineShow.png" /></p>
+<ol>
+<li>主时间线上有左右游标，可以分别拖动左右游标选出某一段时间区域。在选中一段区域之后，鼠标放在选中区域上方时会变为手的形状，此时可以左右拖动此区域。</li>
+<li>将鼠标放在主时间线上，鼠标变为十字光标的形状，此时按住鼠标往前或往后拖动，可以将鼠标滑过的区域设为新的时间区域。</li>
+<li>可以通过 Ctrl + 鼠标滚轮的方式，放大和缩小选中区域。</li>
+<li>每条时间线标识一个仓颉线程或者系统线程。</li>
+</ol>
+<p>单击时间线上的记录点，editor 界面同步刷新（定位到源码的行），调试信息界面同步刷新（展示该记录点的线程、栈帧和变量）。</p>
+<h2 id="unittest-运行和调试"><a class="header" href="#unittest-运行和调试">unittest 运行和调试</a></h2>
+<h3 id="前置条件"><a class="header" href="#前置条件">前置条件</a></h3>
+<p>模块的单元测试代码应采用如下结构，其中 <code>.cj</code> 文件表示包的源码，对应单元测试代码文件命名应以 <code>_test.cj</code> 结尾。具体单元测试代码的写法可参考标准库用户手册。</p>
+<pre><code class="language-text">├── src
+
+│    ├── koo
+
+│    │   ├── koo.cj
+
+│    │   └── koo_test.cj
+
+│    ├── zoo
+
+│    │   ├── zoo.cj
+
+│    │   └── zoo_test.cj
+
+│    ├── main.cj
+
+│    └── main_test.cj
+
+└── cjpm.toml
+</code></pre>
+<h3 id="使用方式"><a class="header" href="#使用方式">使用方式</a></h3>
+<ol>
+<li>单击 <code>@Test/@TestCase</code> 声明行上的 run 按钮，运行该单元测试类/单元测试 case。</li>
+<li>单击 <code>@Test/@TestCase</code> 声明行上的 debug 按钮，调试该单元测试类/单元测试 case。</li>
+</ol>
+<p><img src="./figures/unittest.PNG" alt="unittest" /></p>
+<h2 id="dap-通信日志"><a class="header" href="#dap-通信日志">DAP 通信日志</a></h2>
+<p>调试服务客户端和服务端采用 DAP 协议通信，通信日志可用于定位问题。日志路径在用户目录下 <code>/.cangjie/debug/logs/server</code>。</p>
+<p>可以通过点击左下角齿轮图标，选择设置（Settings）选项，在搜索栏输入 cangjie，找到 Debug 选项，勾选 <code>Enable DAPCommunication Log</code>，开启调试服务通信日志。</p>
+<p><img src="./figures/enableDAPCommunicationLog.png" alt="enableDAPCommunicationLog.png" /></p>
+<h2 id="cjvm-后端调试"><a class="header" href="#cjvm-后端调试">CJVM 后端调试</a></h2>
+<h3 id="功能简介"><a class="header" href="#功能简介">功能简介</a></h3>
+<p>当前仅在 Linux 平台的 VSCode 上支持 CJVM 后端调试，已支持的可视化调试能力如下：</p>
+<ul>
+<li>支持 Launch 模式本地调试。</li>
+<li>支持源码断点、函数断点。</li>
+<li>支持源码内单步调试、运行到光标处、步入、步出、继续、暂停、重启、停止调试。</li>
+<li>支持线程堆栈信息查看。</li>
+<li>支持基础类型变量查看和修改。</li>
+<li>支持 class、array 类型变量展开查看和修改子变量。</li>
+<li>支持跨 Java 调试。</li>
+</ul>
+<h3 id="启动调试-1"><a class="header" href="#启动调试-1">启动调试</a></h3>
+<p>支持仓颉工程的编译调试、单个仓颉源文件的编译调试，以及调试手动编译好的仓颉可执行文件。</p>
+<ul>
+<li>
+<p>Launch 模式仓颉工程调试</p>
+<p>对仓颉工程进行编译并调试前，需要开发者在 Settings 中设置 CJVM SDK，如下图所示。</p>
+<p><img src="./figures/cjvmDebug.png" alt="cjvmDebug" /></p>
+<p>未创建 <code>launch.json</code> 文件时，单击 Run and Debug &gt; Cangjie(cjdb) Debug 启动调试。已创建 <code>launch.json</code> 文件时，单击 Add Configuration &gt; Cangjie (CJVM): launch &gt; Build And Debug Cangjie Project 启动调试。</p>
+</li>
+<li>
+<p>Launch 模式单文件调试</p>
+<p>针对单文件调试，可以选中需要调试的仓颉源文件，右键选择 Cangjie: Build and Debug File (CJVM)，该操作会生成编译配置文件 <code>task.json</code> 和编译脚本，并且会根据 <code>task.json</code> 配置执行脚本，编译出可调试的二进制文件，然后启动调试。</p>
+</li>
+<li>
+<p>Launch 模式调试手动编译的可执行文件</p>
+<p>单击 Run and Debug &gt; Cangjie(cjdb) Debug &gt; Cangjie (CJVM): launch &gt; Choose Executable File Later 启动调试。</p>
+</li>
+</ul>
+<h3 id="调试配置"><a class="header" href="#调试配置">调试配置</a></h3>
+<ul>
+<li>
+<p>在 <code>launch.json</code> 文件可以添加 CJVM 后端仓颉调试配置，单击 Add Configuration，选择 Cangjie (CJVM): launch，会出现如图所示的选项。</p>
+<p><img src="./figures/cjvmDebugConfig.png" alt="cjvmDebugConfig" /></p>
+<p>上述三个选项分别对应三种启动调试方式，会分别生成对应模板。</p>
+</li>
+<li>
+<p>根据模板生成的 CJVM 后端仓颉调试配置示例如下：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;Cangjie (CJVM): main&quot;,
+  &quot;program&quot;: &quot;/**/**/main.cbc&quot;,
+  &quot;request&quot;: &quot;launch&quot;,
+  &quot;type&quot;: &quot;cangjieDebug&quot;,
+  &quot;vmMode&quot;: true,
+  &quot;vmAddress&quot;: &quot;127.0.0.1&quot;,
+  &quot;vmPort&quot;: 3001
+}
+</code></pre>
+<p>上述配置信息中，vmMode 用以表征当前配置是否为 CJVM 后端的调试配置，vmAddress 和 vmPort 是指 CJVM 虚拟机的地址和其监听的端口号。可以根据需要更改插件的现有调试配置。</p>
+</li>
+</ul>
+<h3 id="已支持的调试功能"><a class="header" href="#已支持的调试功能">已支持的调试功能</a></h3>
+<ul>
+<li>
+<p>断点</p>
+<p>当前支持源码断点、函数断点，其使用方式和结果与 CJNative 后端一致。</p>
+</li>
+<li>
+<p>程序控制</p>
+<p>当前支持源码内单步调试、运行到光标处、步入、步出、继续、暂停、重启和停止调试，其使用方式和结果与 CJNative 后端一致。</p>
+</li>
+<li>
+<p>调试信息查看</p>
+<p>当前支持线程堆栈信息查看，其查看方式与 CJNative 后端一致；本地 Launch 模式下启动 CJVM 后端调试，IDE 上会新建 Terminal 用于执行仓颉程序；支持基础类型变量查看和修改；支持 class、array 类型变量展开查看和修改子变量。</p>
+</li>
+<li>
+<p>跨 Java 调试</p>
+<p>在调用 Java 的仓颉程序中，支持调试时跨 Java 调试，包括由仓颉 stepin 到 Java、由 Java stepout 到仓颉、Java 内单步调试、Java 内设置断点、Java 堆栈信息查看。暂不支持 Java 变量查看。</p>
+</li>
+</ul>
+<h2 id="faq"><a class="header" href="#faq">FAQ</a></h2>
+<ol>
+<li>
+<p>添加 STDX 依赖后调试启动失败</p>
+<p>问题原因：当项目中添加了 STDX 依赖后，若调试环境变量未包含 STDX 相关路径配置，会导致被调试程序因无法找到 STDX 依赖而启动失败。</p>
+<p>解决方案：在 cjpm.toml 中配置 STDX 的路径（支持全路径或相对路径，需填写具体路径，不可使用占位符）,启动调试会解析该配置。</p>
+<p><img src="./figures/stdxSettings.png" alt="stdxSettings" /></p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../source_zh_cn/IDE/compilation_and_building.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../source_zh_cn/IDE/command-line_tools_integration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../source_zh_cn/IDE/compilation_and_building.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../source_zh_cn/IDE/command-line_tools_integration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script src="../../cangjie-highlight-export.js"></script><script src="../../highlight.js"></script>
+        <script src="../../assets/elasticlunr.js"></script>
+        <script src="../../assets/fzf.umd.js"></script>
+        <script src="../../assets/sidebar.js"></script>
+
+
+    </div>
+    </body>
+</html>
