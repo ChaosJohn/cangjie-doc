@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,35 +12,51 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         h1 {
             text-align: center;
             margin-bottom: 40px;
+            color: #0056b3;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
         li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
         }
         a {
+            display: block;
             text-decoration: none;
             color: #007bff;
             font-size: 1.2em;
-            transition: color 0.2s;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
         }
         a:hover {
-            color: #0056b3;
-            text-decoration: underline;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            transform: translateX(5px);
         }
     </style>
 </head>
 <body>
-    <h1>Cangjie 开发指南</h1>
-    <ul>
-        <li><a href="latest/">latest</a></li>
-        <li><a href="1.0.3/">v1.0.3</a></li>
-    </ul>
+    <div class="container">
+        <h1>Cangjie 开发指南</h1>
+        <ul>
+            <li><a href="latest/">latest</a></li>
+            <li><a href="1.0.3/">v1.0.3</a></li>
+        </ul>
+    </div>
 </body>
 </html>
